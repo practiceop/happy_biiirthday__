@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moments & Magic</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(236, 72, 153, 0.7); }
+            50% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.9), 0 0 40px rgba(236, 72, 153, 0.5); }
+            100% { box-shadow: 0 0 10px rgba(236, 72, 153, 0.7); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes bubble {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+        }
+        
+        @keyframes rainbowGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes floatingHearts {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        @keyframes shimmerEffect {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        body {
+            background: linear-gradient(-45deg, #fee9f5, #ffd1ec, #d4e9ff, #e8f5ff, #fce4ec, #ffd1ec, #fee9f5);
+            background-size: 400% 400%;
+            animation: backgroundShift 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.3s; }
+        .delay-300 { animation-delay: 0.5s; }
+        .delay-400 { animation-delay: 0.7s; }
+        .delay-500 { animation-delay: 0.9s; }
+        .delay-600 { animation-delay: 1.1s; }
+        
+        .gallery-item {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            z-index: -1;
+            background: linear-gradient(135deg, #ff8fc6, #c054ff, #54a3ff, #ff8fc6);
+            background-size: 200% 200%;
+            animation: rainbowGlow 3s ease infinite;
+            border-radius: 18px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .glow-button {
+            animation: pulseGlow 3s infinite;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff8fc6, #c054ff, #54a3ff, #ff8fc6);
+            background-size: 200% 200%;
+            animation: rainbowGlow 3s ease infinite;
+        }
+        
+        .glow-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        .float-animation {
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatingHearts 2s ease-in-out infinite;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle at center, white, rgba(255,255,255,0));
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px white;
+        }
+        
+        .mute-button {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .mute-button:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .caption-box {
+            transition: all 0.3s ease;
+            transform: translateY(5px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        
+        .gallery-item:hover .caption-box {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .page-container {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50m-40 0a40 40 0 1 1 80 0a40 40 0 1 1 -80 0' fill='none' stroke='%23ffb6e1' stroke-width='0.5' stroke-opacity='0.2'/%3E%3C/svg%3E");
+            background-size: 80px 80px;
+            position: relative;
+        }
+        
+        .bubble {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 182, 225, 0.5));
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .polaroid {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            backdrop-filter: blur(5px);
+            padding: 15px 15px 50px 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: rotate(0deg);
+            transition: all 0.5s ease;
+            border-radius: 15px;
+        }
+        
+        .polaroid:hover {
+            transform: rotate(-2deg);
+        }
+        
+        .polaroid:nth-child(even):hover {
+            transform: rotate(2deg);
+        }
+        
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            pointer-events: none;
+        }
+        
+        .cute-divider {
+            height: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 10 0, 20 10 T 40 10 T 60 10 T 80 10 T 100 10' fill='none' stroke='%23ffb6e1' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: 100px 20px;
+            background-repeat: repeat-x;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .cute-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shimmerEffect 2s linear infinite;
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container min-h-screen pt-8 pb-16 px-4">
+        <div class="container mx-auto max-w-6xl relative">
+            <!-- Decorative Elements -->
+            <div id="bubbleContainer" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+            
+            <!-- Page Title with decorative elements -->
+            <div class="relative mb-12 text-center">
+                <div class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 text-pink-300 text-4xl opacity-30 pointer-events-none">
+                    ✨
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold text-center dancing-script bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-400 to-pink-500 mb-4 fade-in">
+                    Moments & Magic
+                </h1>
+                <p class="dancing-script text-pink-600 text-lg md:text-xl fade-in delay-100">✨ The little things that make me think of you ✨</p>
+                <div class="cute-divider mt-6"></div>
+            </div>
+            
+            <!-- Audio Player with Mute Button -->
+            <div class="fixed top-5 right-5 z-40">
+                <button id="muteButton" class="mute-button bg-white bg-opacity-70 hover:bg-opacity-100 rounded-full p-4 shadow-lg focus:outline-none transition-all">
+                    <div class="relative">
+                        <svg id="volumeOn" class="w-6 h-6 text-pink-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="volumeOff" class="w-6 h-6 text-gray-400 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="absolute -bottom-2 -right-2 w-3 h-3 bg-pink-400 rounded-full opacity-0" id="musicPulse"></span>
+                    </div>
+                </button>
+                <audio id="backgroundMusic" loop>
+                    <source src="./music/Perfect-(Mr-Jat.in).mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            
+            <!-- Gallery Grid with Polaroid-style frames -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mb-12">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item polaroid fade-in delay-100 transform transition-all duration-500 hover:z-10">
+                    <div class="image-container">
+                        <img src="./pic1.jpg" alt="Cute moment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 hover:opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="transform scale-0 hover:scale-100 transition-all duration-300">
+                                <span class="text-4xl heartbeat">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 pt-4">
+                        <p class="text-center dancing-script text-2xl text-pink-600 caption-box">
+                            "When I imagine about you..." 
+                            <span class="text-xl">✨</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item polaroid fade-in delay-200 transform transition-all duration-500 hover:z-10">
+                    <div class="image-container">
+                        <img src="./pic2.jpg" alt="Favorite food" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 hover:opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="transform scale-0 hover:scale-100 transition-all duration-300">
+                                <span class="text-4xl heartbeat">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 pt-4">
+                        <p class="text-center dancing-script text-2xl text-pink-600 caption-box">
+                            "The way you talk when we are close…" 
+                            <span class="text-xl">🥺❤️</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item polaroid fade-in delay-300 transform transition-all duration-500 hover:z-10">
+                    <div class="image-container">
+                        <img src="./pic3.jpg" alt="Text reaction" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 hover:opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="transform scale-0 hover:scale-100 transition-all duration-300">
+                                <span class="text-4xl heartbeat">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 pt-4">
+                        <p class="text-center dancing-script text-2xl text-pink-600 caption-box">
+                            "This is the face I make when I see your texts" 
+                            <span class="text-xl">😳</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item polaroid fade-in delay-400 transform transition-all duration-500 hover:z-10">
+                    <div class="image-container">
+                        <img src="./pic4.jpg" alt="Cute memory" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 hover:opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="transform scale-0 hover:scale-100 transition-all duration-300">
+                                <span class="text-4xl heartbeat">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 pt-4">
+                        <p class="text-center dancing-script text-2xl text-pink-600 caption-box">
+                            "When you share your dreams with me..." 
+                            <span class="text-xl">✨</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item polaroid fade-in delay-500 transform transition-all duration-500 hover:z-10">
+                    <div class="image-container">
+                        <img src="./pic5.jpg" alt="Silly moment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 hover:opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="transform scale-0 hover:scale-100 transition-all duration-300">
+                                <span class="text-4xl heartbeat">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 pt-4">
+                        <p class="text-center dancing-script text-2xl text-pink-600 caption-box">
+                            "How you make ordinary days special..." 
+                            <span class="text-xl">💫</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item polaroid fade-in delay-600 transform transition-all duration-500 hover:z-10">
+                    <div class="image-container">
+                        <img src="./pic6.jpg" alt="Special moment" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 hover:opacity-30 transition-opacity duration-300 flex items-center justify-center">
+                            <div class="transform scale-0 hover:scale-100 transition-all duration-300">
+                                <span class="text-4xl heartbeat">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 pt-4">
+                        <p class="text-center dancing-script text-2xl text-pink-600 caption-box">
+                            "The little things about you I adore" 
+                            <span class="text-xl">✨</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cute-divider"></div>
+            
+            <!-- Final Button with enhanced effects -->
+            <div class="text-center mt-12 mb-8 fade-in delay-600 relative">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-48 h-48 rounded-full bg-pink-200 bg-opacity-30 filter blur-xl"></div>
+                </div>
+                
+                <a href="cake.html" class="glow-button float-animation inline-block px-10 py-5 bg-gradient-to-r from-pink-500 via-pink-400 to-pink-500 hover:from-pink-600 hover:to-pink-600 text-white font-bold rounded-full text-2xl dancing-script transition-all duration-500 transform hover:scale-110 relative z-10">
+                    <span class="relative z-10">Let's Cut the Cakee 🎂 </span>
+                </a>
+                
+                <div class="absolute w-6 h-6 text-pink-300 text-2xl animate-bounce mt-12 left-1/2 transform -translate-x-1/2">
+                    ↓
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating bubbles background effect
+        function createBubbles() {
+            const bubbleContainer = document.getElementById('bubbleContainer');
+            const containerWidth = bubbleContainer.offsetWidth;
+            const containerHeight = bubbleContainer.offsetHeight;
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('bubble');
+                    
+                    // Random position, size and animation duration
+                    const size = 5 + Math.random() * 30;
+                    const left = Math.random() * containerWidth;
+                    
+                    bubble.style.width = `${size}px`;
+                    bubble.style.height = `${size}px`;
+                    bubble.style.left = `${left}px`;
+                    bubble.style.bottom = '-30px';
+                    bubble.style.opacity = '0';
+                    
+                    const animDuration = 5 + Math.random() * 10;
+                    bubble.style.animation = `bubble ${animDuration}s ease-in infinite`;
+                    bubble.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    bubbleContainer.appendChild(bubble);
+                    
+                    // Remove bubbles after a while to prevent too many DOM elements
+                    setTimeout(() => {
+                        bubble.remove();
+                    }, animDuration * 1000 + 5000);
+                    
+                }, i * 500);
+            }
+        }
+        
+        // Function to create hearts and sparkles on hover
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseover', function(e) {
+                createHearts(this);
+                createSparkles(this);
+            });
+        });
+        
+        function createHearts(element) {
+            const numHearts = Math.floor(Math.random() * 5) + 3;
+            
+            for (let i = 0; i < numHearts; i++) {
+                const heart = document.createElement('span');
+                const heartTypes = ['❤️', '💕', '💗', '💖', '💘'];
+                heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+                heart.classList.add('heart', 'absolute');
+                element.appendChild(heart);
+                
+                const startPosX = Math.random() * 100;
+                const finalPosY = -100 - Math.random() * 100;
+                const scale = 0.5 + Math.random() * 0.7;
+                const rotateVal = -30 + Math.random() * 60;
+                
+                heart.style.left = `${startPosX}%`;
+                heart.style.bottom = '0%';
+                heart.style.transform = `scale(${scale}) rotate(${rotateVal}deg)`;
+                
+                // Animate the heart
+                setTimeout(() => {
+                    heart.style.transition = 'all 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    heart.style.opacity = '1';
+                    heart.style.bottom = `${finalPosY}%`;
+                    
+                    // Remove heart after animation
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 2500);
+                }, Math.random() * 500);
+            }
+        }
+        
+        function createSparkles(element) {
+            const numSparkles = Math.floor(Math.random() * 8) + 5;
+            
+            for (let i = 0; i < numSparkles; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                element.appendChild(sparkle);
+                
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const size = 2 + Math.random() * 5;
+                
+                sparkle.style.left = `${posX}%`;
+                sparkle.style.top = `${posY}%`;
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                sparkle.style.background = `radial-gradient(circle at center, white, ${Math.random() < 0.5 ? '#ffcce6' : '#ffd9ec'})`;
+                sparkle.style.boxShadow = `0 0 ${2 + Math.random() * 3}px white`;
+                
+                // Animate the sparkle
+                const animDuration = 0.3 + Math.random() * 0.5;
+                sparkle.style.animation = `sparkle ${animDuration}s ease-out forwards`;
+                
+                // Remove sparkle after animation
+                setTimeout(() => {
+                    sparkle.remove();
+                }, animDuration * 1000);
+            }
+        }
+        
+        // Audio Control with visual feedback
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const muteButton = document.getElementById('muteButton');
+        const volumeOn = document.getElementById('volumeOn');
+        const volumeOff = document.getElementById('volumeOff');
+        const musicPulse = document.getElementById('musicPulse');
+        
+        let isMuted = true; // Start muted by default
+        
+        muteButton.addEventListener('click', function() {
+            if (isMuted) {
+                backgroundMusic.play();
+                volumeOn.classList.remove('hidden');
+                volumeOff.classList.add('hidden');
+                musicPulse.style.animation = 'pulseGlow 1.5s infinite';
+                musicPulse.style.opacity = '1';
+            } else {
+                backgroundMusic.pause();
+                volumeOn.classList.add('hidden');
+                volumeOff.classList.remove('hidden');
+                musicPulse.style.animation = 'none';
+                musicPulse.style.opacity = '0';
+            }
+            isMuted = !isMuted;
+        });
+        
+        // Apply animations and effects when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createBubbles();
+            
+            // Recreate bubbles every so often
+            setInterval(createBubbles, 15000);
+            
+            // Add subtle page entrance effect
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
